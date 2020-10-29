@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+int fd;
+int offset;
+off_t fp;
+int dev;
+void *junk;
+int val;
+
+
+main(int argc, char *argv[]) 
+  
+  
+{
+  
+  //debes pasar un argumento
+  if (argc < 2) {
+    printf("Debe especificar un archivo\n");
+    return 1;
+  }
+
+  printf("Trabajando con el archivo \"%s\"\n", argv[1]);
+
+  fd = open(argv[1], O_RDWR, 0);
+
+  struct stat pt;
+  fstat(fd, &pt);
+
+  printf("El tamaño del archivo es %d bytes\n", pt.st_size);
+
+  //busco valores aleatorios menores al tamaño del archivo
+  //  offset = rand() % pt.st_size;
+  // printf("El offset fue seteado a %d\n", offset);
+
+  //me ubico en posicion aleatoria dentro del archivo
+  //fp = lseek(fd, offset, SEEK_SET);
+  //fp = lseek(fd, 0, SEEK_SET);
+  //printf("Posicionados a %d bytes desde el inicio del archivo\n", fp);
+  
+  //escribo datos aleatorios
+  dev = open("/dev/random", O_RDONLY, 0);
+  read(dev, &junk, 512);
+  close(dev);
+  val = write(fd, &junk, 512);
+  if (val > 0) {
+    printf("se escribieron %d bytes de basura en el archivo\n", val);
+  }
+  else {
+    fprintf(stderr, "error %d\n", val);
+    return 1;
+  }
+  
+  
+  fsync(fd);
+  close(fd);
+    
+}

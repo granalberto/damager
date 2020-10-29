@@ -1,0 +1,10 @@
+# Damager
+
+The files damager.
+
+**damager** is a command line utility for testing file alteration
+  monitors. It doesn't change the file's size but writes a chunk of
+  garbage instead. The garbage writen is randomly taken from
+  `/dev/random` and writen on a random position within the file.
+
+##  
