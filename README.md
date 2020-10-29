@@ -8,8 +8,11 @@ The files damager.
   file.
 ## Compile
 `clang -std=c90 -o damager damager.c`
+
 Or just run
+
 `make`
+
 ## Install
 The binary **damager** should be placed in `/usr/local/bin/`.
 
